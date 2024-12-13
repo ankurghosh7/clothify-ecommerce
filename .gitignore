@@ -30,11 +30,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # env files (can opt-in for committing if needed)
-<<<<<<< HEAD
 .env*
-=======
 .env.local
->>>>>>> 2e72a3e (day 5)
 
 # vercel
 .vercel

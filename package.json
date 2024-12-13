@@ -9,8 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
+    "react-hook-form": "^7.53.2",
+    "react-resizable-panels": "^2.1.7",
+    "recharts": "^2.14.1",
+    "server-only": "^0.0.1",
+    "sonner": "^1.7.0",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.1",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "@clerk/nextjs": "^6.8.0",
     "@hookform/resolvers": "^3.9.1",
     "@neondatabase/serverless": "^0.10.4",
@@ -61,39 +71,17 @@
     "next-cloudinary": "^6.16.0",
     "next-themes": "^0.4.4",
     "pg": "^8.13.1",
-    "razorpay": "^2.9.5",
->>>>>>> 2e72a3e (day 5)
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-<<<<<<< HEAD
-    "next": "15.0.4"
-=======
-    "react-hook-form": "^7.53.2",
-    "react-resizable-panels": "^2.1.7",
-    "recharts": "^2.14.1",
-    "server-only": "^0.0.1",
-    "sonner": "^1.7.0",
-    "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7",
-    "vaul": "^1.1.1",
-    "zod": "^3.23.8",
-    "zustand": "^5.0.2"
->>>>>>> 2e72a3e (day 5)
+    "razorpay": "^2.9.5"
   },
   "devDependencies": {
     "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-<<<<<<< HEAD
-=======
-    "drizzle-kit": "^0.29.1",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "15.0.4",
->>>>>>> 2e72a3e (day 5)
+    "@types/node": "^22.10.2",
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.4"
+    "eslint": "^9.17.0",
+    "eslint-config-next": "14.2.20",
+    "drizzle-kit": "^0.30.1"
   }
 }

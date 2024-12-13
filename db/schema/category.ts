@@ -1,6 +1,6 @@
 import { timestamps } from "@/db/schema/columns.helpers";
 import { pgTable, integer, varchar } from "drizzle-orm/pg-core";
-import admins from "./admin";
+import admins from "./admins";
 
 const categories = pgTable("categories", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

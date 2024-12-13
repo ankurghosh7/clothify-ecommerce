@@ -1,10 +1,13 @@
-import { TPaymentDetails, timestamps } from "@/db/schema/columns.helpers";
-import { pgTable, integer, varchar, json } from "drizzle-orm/pg-core";
+import { TCartItem, timestamps } from "@/db/schema/columns.helpers";
+import {
+  pgTable,
+  integer,
+  varchar,
+  json,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
-type cartItem = {
-  productId: number;
-  quantity: number;
-};
 /**
  * @description This is the schema for the users table in the postgres database.
  * @type {Table} users - The users table
@@ -27,18 +30,61 @@ type cartItem = {
  *
  */
 const customers = pgTable("customers", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull(),
-  password: varchar("password", { length: 255 }).notNull(),
-  paymentDetails: json("payment_details").$type<TPaymentDetails>(),
-  role: varchar("role", { length: 50 }).notNull().default("customer"),
-  cart: json("cart").$type<cartItem[]>().default([]),
-  wishlist: integer("wishlist").array().default([]),
-  age: integer("age"),
-  gender: varchar("gender", { length: 10 }),
-  refreshToken: varchar("refresh_token", { length: 255 }),
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(), // Primary key for the customer
+  name: varchar("name", { length: 255 }).notNull(), // Customer name (e.g., John Doe)
+  email: varchar("email", { length: 255 }).notNull(), // Customer email address (e.g., example@example.com)
+  password: varchar("password", { length: 255 }).notNull(), // Customer password (e.g., password123)
+  role: varchar("role", { length: 50 }).notNull().default("customer"), // Customer role (e.g., customer, admin)
+  age: integer("age"), // Customer age (optional)
+  gender: varchar("gender", { length: 10 }), // Customer gender (optional)
+  refreshToken: varchar("refresh_token", { length: 255 }), // Refresh token for JWT authentication
   ...timestamps,
 });
 
 export default customers;
+
+const paymentMethods = pgTable("payment_methods", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(), // Primary key for the payment method
+  customerId: integer("customer_id")
+    .references(() => customers.id)
+    .notNull(), // Foreign key to users table
+  type: varchar("type", { length: 50 }).notNull(), // Payment method type (e.g., credit_card, paypal)
+  provider: varchar("provider", { length: 100 }).notNull(), // Payment provider (e.g., Visa, Mastercard)
+  details: text("details"), // Optional JSON string for additional details (expiry date, etc.)
+  createdAt: timestamp("created_at").defaultNow(), // Timestamp for when the payment method was added
+});
+
+const addresses = pgTable("addresses", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(), // Primary key for the address
+  customerId: integer("customer_id")
+    .references(() => customers.id)
+    .notNull(), // Foreign key to users table
+  address: text("address").notNull(), // Address string
+  city: varchar("city", { length: 100 }).notNull(), // City name
+  state: varchar("state", { length: 100 }).notNull(), // State name
+  country: varchar("country", { length: 100 }).notNull(), // Country name
+  zipCode: varchar("zip_code", { length: 10 }).notNull(), // Zip code
+  phone: varchar("phone", { length: 15 }).notNull(), // Phone number
+  secoundPhone: varchar("secound_phone", { length: 15 }), // Optional second phone number
+  createdAt: timestamp("created_at").defaultNow(), // Timestamp for when the address was added
+});
+
+const customersCart = pgTable("customers_cart", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(), // Primary key for the cart
+  customerId: integer("customer_id")
+    .references(() => customers.id)
+    .notNull(), // Foreign key to users table
+  items: json("items").$type<TCartItem[]>().default([]), // JSON array of cart
+  createdAt: timestamp("created_at").defaultNow(), // Timestamp for when the cart was added
+});
+
+const customersWishlist = pgTable("customers_wishlist", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(), // Primary key for the wishlist
+  customerId: integer("customer_id")
+    .references(() => customers.id)
+    .notNull(), // Foreign key to users table
+  items: json("items").$type<string[]>().default([]), // JSON array of wishlist items
+  createdAt: timestamp("created_at").defaultNow(), // Timestamp for when the wishlist was added
+});
+
+export { paymentMethods, addresses, customersCart, customersWishlist };
