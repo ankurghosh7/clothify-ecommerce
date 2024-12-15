@@ -1,4 +1,4 @@
-import { EPaymentMethod } from "@/lib/types";
+import { EPaymentMethod } from "@/types";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 

@@ -4,8 +4,8 @@ import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Button } from "../ui/button";
-import { Product } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { Product } from "@/types";
 import { useCart } from "@/services/cart.provider";
 
 const ProductCard = ({ product }: { product: Product }) => {

@@ -23,3 +23,12 @@ export enum EPaymentMethod {
   UPI = "UPI",
   NETBANKING = "NETBANKING",
 }
+
+export type TAdminUserFormProps = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: string;
+  permissions: string[];
+};

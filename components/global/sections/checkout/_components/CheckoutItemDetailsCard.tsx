@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CartItem } from "@/lib/types";
+import { CartItem } from "@/types";
 import Image from "next/image";
 const CheckoutItemDetailsCard = ({ items }: { items: CartItem[] }) => {
   const total = items.reduce(

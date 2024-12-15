@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { CartItem, Product } from "@/lib/types";
+import { CartItem, Product } from "@/types";
 
 interface CartStore {
   items: CartItem[];

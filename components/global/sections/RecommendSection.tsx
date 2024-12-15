@@ -1,6 +1,6 @@
 import React from "react";
 import ProductCard from "../product-card";
-import { Product } from "@/lib/types";
+import { Product } from "@/types";
 
 const RecommendSection = () => {
   const products: Product[] = [
