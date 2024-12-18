@@ -60,6 +60,13 @@ const Header = () => {
         <NavigationMenu className="">
           <NavigationMenuList className="cscv">
             <NavigationMenuItem>
+              <Link href="/sale" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Sale
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
               <Link href="/new" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   New

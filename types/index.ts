@@ -32,3 +32,10 @@ export type TAdminUserFormProps = {
   role: string;
   permissions: string[];
 };
+
+export type TTopBarProps = {
+  title: string;
+  bgColor?: string;
+  bgImage?: string;
+  active: boolean;
+};
