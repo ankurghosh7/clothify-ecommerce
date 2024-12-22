@@ -39,3 +39,8 @@ export type TTopBarProps = {
   bgImage?: string;
   active: boolean;
 };
+
+export type TUserSignInFormProps = {
+  email: string;
+  password: string;
+};

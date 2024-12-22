@@ -14,7 +14,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/services/cart.provider";
 
-const CartPopup = () => {
+const CartDropdown = () => {
   const {
     // addToCart,
     cart: items,
@@ -110,4 +110,4 @@ const CartPopup = () => {
   );
 };
 
-export default CartPopup;
+export default CartDropdown;
