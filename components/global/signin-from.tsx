@@ -9,6 +9,7 @@ import { TUserSignInFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserSigninForm } from "@/zod/user";
 import { OAuthStrategy } from "@clerk/types";
+import { FcGoogle } from "react-icons/fc";
 
 const SigninFrom = () => {
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -61,10 +62,11 @@ const SigninFrom = () => {
       redirectUrlComplete: "/",
     });
   };
+
   return (
     <div className="max-w-[25rem] mx-auto p-6 rounded-lg shadow-lg space-y-8">
       <div className="space-y-2">
-        <h1 className="text-xl font-medium">Sign in using email</h1>
+        <h1 className="text-xl font-medium">Sign in</h1>
         <p className="text-sm text-gray-500">
           Sign in using your email address to continue shopping and view your
           orders.
@@ -108,22 +110,25 @@ const SigninFrom = () => {
           Sign in
         </Button>
       </form>
+
+      {/*  */}
+      <p className="flex gap-5 items-center justify-center text-sm text-gray-500 relative before:relative before:w-10 before:h-[1px] before:bg-gray-500 after:relative after:content-[''] after:w-10 after:h-[1px] after:bg-gray-500">
+        Or sign in with
+      </p>
+      {/* oauth peovider */}
       <div>
-        <p className="text-sm text-gray-500 relative before:absolute before:w-5 before:h-1 before:bg-gray-500">
-          Or sign in with
-        </p>
-        <div>
-          <div className="flex space-x-2 mt-2">
-            <Button
-              className="w-full"
-              variant={"outline"}
-              onClick={() => signInWith("oauth_google")}
-            >
-              Google
-            </Button>
-          </div>
+        <div className="flex space-x-2 mt-2">
+          <Button
+            className="w-full"
+            variant={"outline"}
+            onClick={() => signInWith("oauth_google")}
+          >
+            <FcGoogle className="size-6" />
+            <span>Sign in with Google</span>
+          </Button>
         </div>
       </div>
+      {/*  */}
       <div className="flex justify-center items-center">
         <p className="text-sm text-gray-500">
           Don't have an account?{" "}

@@ -2,37 +2,39 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import { useSignIn } from "@clerk/nextjs";
+import { useSignUp } from "@clerk/nextjs";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { TUserSignInFormProps } from "@/types";
+import { TUserSignUpFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserSigninForm } from "@/zod/user";
+import { UserSignUpForm } from "@/zod/user";
 import { OAuthStrategy } from "@clerk/types";
+import { FcGoogle } from "react-icons/fc";
 
 const SignupFrom = () => {
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { isLoaded, signUp, setActive } = useSignUp();
   const {
     formState: { errors },
     register,
     handleSubmit,
-  } = useForm<TUserSignInFormProps>({
-    resolver: zodResolver(UserSigninForm),
+  } = useForm<TUserSignUpFormProps>({
+    resolver: zodResolver(UserSignUpForm),
   });
   const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect_url") ?? "/";
 
-  const onSubmit: SubmitHandler<TUserSignInFormProps> = async (d, e) => {
+  const onSubmit: SubmitHandler<TUserSignUpFormProps> = async (d, e) => {
     e?.preventDefault();
 
     if (!isLoaded) return;
 
     // Start the sign-in process using the email and password provided
     try {
-      const signInAttempt = await signIn.create({
-        identifier: d.email,
+      const signInAttempt = await signUp.create({
+        phoneNumber: d.number,
+        emailAddress: d.email,
         password: d.password,
       });
 
@@ -55,22 +57,51 @@ const SignupFrom = () => {
 
   const signInWith = (strategy: OAuthStrategy) => {
     if (!isLoaded) return;
-    return signIn.authenticateWithRedirect({
+    return signUp.authenticateWithRedirect({
       strategy,
       redirectUrl: "/auth/signup/sso-callback",
       redirectUrlComplete: "/",
     });
   };
   return (
-    <div className="max-w-[25rem] mx-auto p-6 rounded-lg shadow-lg space-y-8">
+    <div className="w-full sm:w-3/4 md:max-w-[30rem] mx-auto p-6 rounded-lg shadow-lg space-y-8">
       <div className="space-y-2">
-        <h1 className="text-xl font-medium">Sign in using email</h1>
+        <h1 className="text-xl font-medium">Sign Up</h1>
         <p className="text-sm text-gray-500">
-          Sign in using your email address to continue shopping and view your
-          orders.
+          Sign in to access your account and start your journey with us.
         </p>
       </div>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex items-center gap-4">
+          <div className="w-full">
+            <label
+              htmlFor="full_name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              First Name
+            </label>
+            <input
+              type="text"
+              id="full_name"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              {...register("first_name", { required: true })}
+            />
+          </div>
+          <div className="w-full">
+            <label
+              htmlFor="last_name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              {...register("last_name", { required: true })}
+            />
+          </div>
+        </div>
         <div>
           <label
             htmlFor="email"
@@ -87,6 +118,20 @@ const SignupFrom = () => {
         </div>
         <div>
           <label
+            htmlFor="number"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Phone Number
+          </label>
+          <input
+            type="text"
+            id="number"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            {...register("number", { required: true })}
+          />
+        </div>
+        <div>
+          <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
           >
@@ -99,36 +144,31 @@ const SignupFrom = () => {
             {...register("password", { required: true })}
           />
         </div>
-        <div className="flex justify-end items-center">
-          <Link href="/auth/forgot-password" className="text-sm">
-            Forgot password?
-          </Link>
-        </div>
+
         <Button type="submit" className="w-full">
-          Sign in
+          Sign up
         </Button>
       </form>
+      <p className="flex gap-5 items-center justify-center text-sm text-gray-500 relative before:relative before:w-10 before:h-[1px] before:bg-gray-500 after:relative after:content-[''] after:w-10 after:h-[1px] after:bg-gray-500">
+        Or sign in with
+      </p>
       <div>
-        <p className="text-sm text-gray-500 relative before:absolute before:w-5 before:h-1 before:bg-gray-500">
-          Or sign in with
-        </p>
-        <div>
-          <div className="flex space-x-2 mt-2">
-            <Button
-              className="w-full"
-              variant={"outline"}
-              onClick={() => signInWith("oauth_google")}
-            >
-              Google
-            </Button>
-          </div>
+        <div className="flex space-x-2 mt-2">
+          <Button
+            className="w-full"
+            variant={"outline"}
+            onClick={() => signInWith("oauth_google")}
+          >
+            <FcGoogle className="size-6" />
+            <span>Sign in with Google</span>
+          </Button>
         </div>
       </div>
       <div className="flex justify-center items-center">
         <p className="text-sm text-gray-500">
-          Don't have an account?{" "}
-          <Link href="/auth/signup" className="text-indigo-500">
-            Sign up
+          Already have an account?{" "}
+          <Link href="/auth/signin" className="text-indigo-500">
+            Sign in
           </Link>
         </p>
       </div>

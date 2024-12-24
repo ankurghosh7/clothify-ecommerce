@@ -44,3 +44,11 @@ export type TUserSignInFormProps = {
   email: string;
   password: string;
 };
+
+export type TUserSignUpFormProps = {
+  first_name: string;
+  last_name: string;
+  number: string;
+  email: string;
+  password: string;
+};
