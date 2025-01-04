@@ -9,7 +9,7 @@ export default function HomeLayout({
 }>) {
   return (
     <>
-      <TopBanner />
+      {/* <TopBanner /> */}
       <Header />
       <main>{children}</main>
       <Footer />
